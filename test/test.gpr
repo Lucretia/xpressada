@@ -1,0 +1,52 @@
+-- export TAMP=<dir where you installed the TAMP tools>
+-- export TAMP_RTS=<dir where the source for TAMP is>/rts
+-- export BITS=<64 or empty>
+-- PATH=$TAMP/bin:$PATH LD_LIBRARY_PATH=$TAMP/lib$BITS:$LD_LIBRARY_PATH arm-none-eabi-gnatmake --RTS=$TAMP_RTS/boards/xpresso1769 -Pblink.gpr 
+
+project Test is
+   for Source_Dirs use ("src");
+   for Source_Files use
+     ("test.adb",
+      "isr.adb");
+   for Object_Dir use "obj";
+   for Exec_Dir use ".";
+   for Main use ("test");
+
+   package Builder is
+      for Default_Switches ("Ada") use
+         ("-gnat05",
+	  "-nostdinc",
+	  "-nostdlib",
+	  "-gnatyx",
+	  "-gnaty-s",
+	  "-gnatG",
+	  "-I./src");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use
+        ("-g",
+	 "-ffunction-sections",
+	 "-fdata-sections",
+	 "-mcpu=cortex-m3",
+	 "-mthumb");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("Ada") use ("-n");
+   end Binder;
+
+-- To reduce size of final binary.
+   package Linker is
+      for Default_Switches ("Ada") use
+        ("-nostartfiles",
+	 "-lgnat",
+	 "-Wl,--script=../link.ld",
+	 "-Wl,-Map=blink.map",
+	 "-Wl,--error-unresolved-symbols");
+--	 "-Wl,--gc-sections",
+--	 "-Wl,--print-gc-sections");
+--	 "-Wl,--whole-archive",
+--"-Wl,--verbose", 
+   end Linker;
+end Test;
