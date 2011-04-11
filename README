@@ -1,0 +1,11 @@
+--------------------------------------------------------------------------------
+                                 XpressAda
+--------------------------------------------------------------------------------
+
+A set of sample projects for use with an Ada (GNAT) compiler and an LPCXpresso
+based board.
+
+To build test:
+
+export RTS=<location of TAMP>/rts
+make
