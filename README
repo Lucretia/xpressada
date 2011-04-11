@@ -5,7 +5,14 @@
 A set of sample projects for use with an Ada (GNAT) compiler and an LPCXpresso
 based board.
 
-To build test:
+Test
+----
+
+This is a sample project to try to work out some issues with GNAT, this is not
+something to use on a final board.
+
+Building
+--------
 
 export RTS=<location of TAMP>/rts
 make
