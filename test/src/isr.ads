@@ -11,9 +11,12 @@ package ISR is
 
    procedure Reset_Handler;
    pragma Export (C, Reset_Handler, "Reset_Handler");
+   -- interrupt is ignored
+   pragma Machine_Attribute (Reset_Handler, "interrupt");
 
    procedure Dummy;
    pragma Convention (C, Dummy);
+   pragma Machine_Attribute (Dummy, "interrupt");
 
 --     type Vectors is private;
 --     pragma Preelaborable_Initialization (Vectors);
